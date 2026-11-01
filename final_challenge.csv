@@ -1,0 +1,11 @@
+message,expected_outcome
+"Please stop my order before it is sent out.",cancel_order
+"Could you add another item to the order I just placed?",change_order
+"Please send my package to my new address instead.",change_shipping_address
+"Has my parcel left the warehouse yet?",track_order
+"I would like to speak with a real person.",contact_human_agent
+"I received the item but want my payment returned.",get_refund
+"Can I get a receipt for my purchase?",human_review
+"My package arrived damaged. What should I do?",human_review
+"Something is wrong with my order and I need assistance.",human_review
+"Do you offer gift wrapping?",human_review

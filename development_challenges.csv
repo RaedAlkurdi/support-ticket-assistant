@@ -1,0 +1,11 @@
+message,expected_outcome
+"My order hasn’t arrived yet. Can you tell me where it is?",track_order
+"Can I change my order? I want two pieces instead of one",change_order
+"I moved to new adress. Can you update the shipping adress?",change_shipping_address
+"Can I talk to an agent?",contact_human_agent
+"I didn't get my money back, can you fix this?",human_review
+"I dont want the stuff anymore",human_review
+"I placed an order this morning and need to cancel it before dispatch.",cancel_order
+"Where is order 4821 right now?",track_order
+"I need help with my order, but I'm not sure what to do.",human_review
+"Do you sell replacement batteries?",human_review
