@@ -87,3 +87,30 @@ Saved the fine-tuned model and tokenizer to `artifacts/distilbert_intents`. Relo
 
 ### Limitations
 Results are from the synthetic Bitext dataset and one validation split. Identical-message grouping does not catch all paraphrases or shared templates. The test split remains unused.
+
+## Day 4: Calibration and review routing
+
+### Development challenge check
+
+I applied temperature scaling to the DistilBERT logits using the fitted value in `optimizer.x`. The numeric temperature value was not recorded here. I used a threshold of `0.80`: messages with a maximum probability greater than `0.80` were accepted automatically; the rest were sent for manual review. The `expected_outcome` column was used only to compare results after routing.
+
+On the 10 development challenge messages, 6 were accepted and 4 were sent for review. Three accepted messages matched the expected outcome. The other three should have gone to review or received a different intent. That is an accepted-error rate of 3/6 (50%) and coverage of 6/10 (60%) on this small challenge set.
+
+| Row | Expected outcome | Routing result |
+|---:|---|---|
+| 0 | `track_order` | Manual review |
+| 1 | `change_order` | Accepted as `change_order` |
+| 2 | `change_shipping_address` | Accepted as `change_shipping_address` |
+| 3 | `contact_human_agent` | Accepted as `contact_human_agent` |
+| 4 | `human_review` | Accepted as `get_refund` |
+| 5 | `human_review` | Manual review |
+| 6 | `cancel_order` | Accepted as `change_shipping_address` |
+| 7 | `track_order` | Manual review |
+| 8 | `human_review` | Accepted as `contact_human_agent` |
+| 9 | `human_review` | Manual review |
+
+Rows 4, 6, and 8 were incorrect automatic acceptances. Rows 0 and 7 were sent to review even though the expected outcome named a supported intent. Rows 5 and 9 correctly went to review.
+
+### Limitations and remaining evaluation
+
+These results cover only 10 development challenge messages and are exploratory. They do not estimate performance on new customer messages. The Day 4 validation comparison, reliability plot, threshold metrics on validation data, and saved calibrator status have not been recorded here. The calibration value also needs to be added.
