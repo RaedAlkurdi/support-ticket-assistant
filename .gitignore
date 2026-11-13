@@ -1,0 +1,6 @@
+.venv*/
+.ua/
+artifacts/
+my_awesome_model/
+split_assignments.csv
+__pycache__/

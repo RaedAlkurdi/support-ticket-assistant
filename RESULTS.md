@@ -90,11 +90,49 @@ Results are from the synthetic Bitext dataset and one validation split. Identica
 
 ## Day 4: Calibration and review routing
 
+### Temperature scaling
+
+I fitted a temperature-scaling parameter on the calibration split to adjust
+DistilBERT's predicted probabilities. The fitted temperature was **0.67236**.
+
+| Dataset | Uncalibrated log loss | Calibrated log loss |
+|---|---:|---:|
+| Calibration | 0.05729 | 0.03373 |
+| Validation | 0.06035 | 0.03264 |
+
+The calibrated probabilities had lower log loss on both splits. I also generated
+a reliability plot comparing calibrated and uncalibrated confidence on the
+validation split.
+
+### Confidence thresholds
+
+I examined thresholds of 0.70, 0.80, 0.90, and 0.95. The saved notebook
+results used confidence and correctness values from the **calibration split**,
+not the validation split.
+
+| Threshold | Accepted | Sent to review | Incorrectly accepted | Coverage | Accepted-error rate |
+|---:|---:|---:|---:|---:|---:|
+| 0.70 | 592 | 4 | 2 | 99.33% | 0.34% |
+| 0.80 | 591 | 5 | 2 | 99.16% | 0.34% |
+| 0.90 | 586 | 10 | 2 | 98.32% | 0.34% |
+| 0.95 | 571 | 25 | 2 | 95.81% | 0.35% |
+
+These threshold results used the uncalibrated confidence scores. Validation
+threshold metrics for calibrated probabilities still need to be calculated.
+
 ### Development challenge check
 
-I applied temperature scaling to the DistilBERT logits using the fitted value in `optimizer.x`. The numeric temperature value was not recorded here. I used a threshold of `0.80`: messages with a maximum probability greater than `0.80` were accepted automatically; the rest were sent for manual review. The `expected_outcome` column was used only to compare results after routing.
+I applied temperature scaling to the DistilBERT logits using the fitted
+temperature. With a threshold of **0.80**, messages with a maximum probability
+greater than 0.80 were accepted automatically; the rest were sent for manual
+review. The `expected_outcome` column was used only to compare results after
+routing.
 
-On the 10 development challenge messages, 6 were accepted and 4 were sent for review. Three accepted messages matched the expected outcome. The other three should have gone to review or received a different intent. That is an accepted-error rate of 3/6 (50%) and coverage of 6/10 (60%) on this small challenge set.
+Of the 10 development challenge messages, 6 were accepted and 4 were sent for
+review. Three accepted messages matched the expected outcome. The other three
+should have gone to review or received a different intent. This gives an
+accepted-error rate of **3/6 (50%)** and coverage of **6/10 (60%)** on this
+small challenge set.
 
 | Row | Expected outcome | Routing result |
 |---:|---|---|
@@ -109,8 +147,37 @@ On the 10 development challenge messages, 6 were accepted and 4 were sent for re
 | 8 | `human_review` | Accepted as `contact_human_agent` |
 | 9 | `human_review` | Manual review |
 
-Rows 4, 6, and 8 were incorrect automatic acceptances. Rows 0 and 7 were sent to review even though the expected outcome named a supported intent. Rows 5 and 9 correctly went to review.
+Rows 4, 6, and 8 were incorrect automatic acceptances. Rows 0 and 7 were sent
+to review even though the expected outcome named a supported intent. Rows 5
+and 9 correctly went to review.
 
-### Limitations and remaining evaluation
+## Day 5: Final evaluation
 
-These results cover only 10 development challenge messages and are exploratory. They do not estimate performance on new customer messages. The Day 4 validation comparison, reliability plot, threshold metrics on validation data, and saved calibrator status have not been recorded here. The calibration value also needs to be added.
+I evaluated both saved models on 596 held-out test messages.
+
+| Model | Correct | Accuracy | Macro F1 |
+|---|---:|---:|---:|
+| TF-IDF + logistic regression | 592/596 | 99.33% | 0.99 |
+| DistilBERT | 591/596 | 99.16% | 0.99 |
+
+With temperature scaling and the chosen threshold of 0.90, DistilBERT
+accepted 586 test messages and sent 10 to review. One accepted prediction
+was wrong, giving 98.32% coverage and a 0.17% accepted-error rate.
+
+The accepted error was a cancellation request predicted as `get_refund`
+with 97.88% confidence.
+
+### Final challenge set
+
+Of 10 messages, seven were accepted and three were sent to review. Three
+of the seven accepted messages were wrong. Two of the four cases expected
+to go to review were accepted automatically.
+
+### Saved inference
+
+Both saved models loaded and predicted in a fresh process. Messages below
+or equal to the threshold were appended to a local review queue with their
+suggested intent and confidence.
+
+These results come from a synthetic test set and a ten-message challenge
+set. They do not establish performance on real customer messages.
