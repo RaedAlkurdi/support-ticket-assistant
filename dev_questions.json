@@ -1,0 +1,61 @@
+[
+{
+  "question": "Can I stop my purchase before it's sent?",
+  "relevant_article_ids": ["shop-001"],
+  "answerable": true
+},
+
+{
+  "question": "Can I change my shipping address after it's sent?",
+  "relevant_article_ids": ["shop-003"],
+  "answerable": true
+},
+
+{
+  "question": "Can I get another item instead before it's sent?",
+  "relevant_article_ids": ["shop-002"],
+  "answerable": true
+},
+
+{
+  "question": "Can I track my order after it's sent",
+  "relevant_article_ids": ["shop-004"],
+  "answerable": true
+},
+
+{
+  "question": "Can I contact a human agent about my purchase",
+  "relevant_article_ids": ["shop-005"],
+  "answerable": true
+},
+
+{
+  "question": "Can I get a refund for my stuff?",
+  "relevant_article_ids": ["shop-006"],
+  "answerable": true
+},
+
+{
+  "question": "Can return my item after 45 days?",
+  "relevant_article_ids": ["shop-007"],
+  "answerable": true
+},
+
+{
+  "question": "What happend to my refund?",
+  "relevant_article_ids": [],
+  "answerable": false
+},
+
+{
+  "question": "How much does shipping cost?",
+  "relevant_article_ids": [],
+  "answerable": false
+},
+
+{
+  "question": "Can I pay with a gift card?",
+  "relevant_article_ids": [],
+  "answerable": false
+}
+]

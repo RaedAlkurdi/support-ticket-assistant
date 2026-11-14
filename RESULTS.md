@@ -181,3 +181,20 @@ suggested intent and confidence.
 
 These results come from a synthetic test set and a ten-message challenge
 set. They do not establish performance on real customer messages.
+
+## Day 6: Article retrieval
+
+I created eight fictional shop articles and compared two ways to find relevant articles: TF-IDF and sentence embeddings.
+
+I tested both methods on seven answerable development questions. A hit means a relevant article appeared in the top three results.
+
+| Retriever | Hit rate@3 |
+|---|---:|
+| TF-IDF | 6/7 (85.7%) |
+| Sentence embeddings | 7/7 (100%) |
+
+The embedding model was `sentence-transformers/all-MiniLM-L6-v2`. TF-IDF missed a cancellation question because the relevant article ranked fourth. The embedding model ranked it first.
+
+I chose embeddings for the next step. This is a small development set, so the results are only an initial comparison. Both retrievers returned articles for unanswerable questions, even though the articles did not contain the requested information.
+
+All eight articles were within the embedding model's token limit.

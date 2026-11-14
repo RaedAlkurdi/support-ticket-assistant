@@ -1,0 +1,49 @@
+[
+{
+  "id": "shop-001",
+  "title": "Cancel order",
+  "text": "When: Cancellation is allowed until the order ships. How: The customer contacts support and provides their order number. After shipping: The customer can no longer cancel and should contact support about a return."
+},
+
+{
+  "id": "shop-002",
+  "title": "Changing an order",
+  "text": "When: Changing an order is allowed until the order ships. This includes replacing an item with another item. How: The customer contacts support and provides their order number, what they want to change. After shipping: The customer can no longer change the order and should contact support about a return, and reorder the right articles."
+},
+
+{
+  "id": "shop-003",
+  "title": "Changing a shipping address",
+  "text": "When: Changing a shipping adress is allowed until the order ships. How: The customer contacts support provides their order number, and they provide the new address. After shipping: Contact support for help."
+},
+
+{
+  "id": "shop-004",
+  "title": "Tracking an order",
+  "text": "When: Tracking an order is possible when the order gets sent. How: The customer contacts support and provides their order number."
+},
+
+{
+  "id": "shop-005",
+  "title": "Contact a human agent",
+  "text": "When: Customers can contact a human agent for help with an order or a shop policy. How: The customer contacts support and describes the issue. For an order question, they provide their order number."
+},
+
+{
+  "id": "shop-006",
+  "title": "Request a refund",
+  "text": "When: A customer can request a refund after returning an eligible item. How: The customer contacts support and provides their order number and the reason for the refund request. After the request: Support reviews the request and tells the customer whether it is approved. "
+},
+
+{
+  "id": "shop-007",
+  "title": "Return an item",
+  "text": "When: A customer can request a return within 30 days of receiving an item. How: The customer contacts support with their order number and the reason for the return. Support provides return instructions. Condition: The item must be unused and in its original packaging."
+},
+
+{
+  "id": "shop-008",
+  "title": "Refund processing",
+  "text": "When: An approved refund is processed after the returned item is received and inspected. How: The refund is sent to the original payment method. Timing: The shop processes approved refunds within five business days after inspection. "
+}
+]

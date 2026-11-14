@@ -45,3 +45,4 @@ typing_extensions==4.16.0
 tzdata==2026.5
 xxhash==4.0.2
 yarl==1.25.1
+sentence-transformers==6.3.0
