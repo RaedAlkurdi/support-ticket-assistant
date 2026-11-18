@@ -198,3 +198,10 @@ The embedding model was `sentence-transformers/all-MiniLM-L6-v2`. TF-IDF missed 
 I chose embeddings for the next step. This is a small development set, so the results are only an initial comparison. Both retrievers returned articles for unanswerable questions, even though the articles did not contain the requested information.
 
 All eight articles were within the embedding model's token limit.
+
+
+## Day 7: Reply drafting
+
+I ran `qwen2.5-coder-7b-instruct` locally through LM Studio with temperature 0. The prompt in `retrieval.py` gives the model the customer’s question and the top three articles.
+
+I tested two development questions. The cancellation reply cited `shop-001` and included the article for review. For the shipping-cost question, the script returned `insufficient_information` because the articles gave no price.
