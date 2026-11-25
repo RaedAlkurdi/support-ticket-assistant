@@ -13,6 +13,10 @@ with open ('articles.json', 'r') as f:
 with open ('dev_questions.json', 'r') as f:
     dev_questions = json.load(f)
 
+# loading  dev questions
+with open ('final_questions.json', 'r') as f:
+    fin_questions = json.load(f)
+
 #making a list of all text
 texts = []
 for article in articles:
@@ -24,8 +28,8 @@ X = vecktorizer.fit_transform(texts)
 hit = 0
 answerable_count= 0
 
-for i in range (len(dev_questions)):
-    question = dev_questions[i]['question'] #choosing question 
+for i in range (len(fin_questions)):
+    question = fin_questions[i]['question'] #choosing question 
     X2 = vecktorizer.transform([question])
     simlarity = cosine_similarity(X,X2)
     scores = simlarity[:, 0]
@@ -41,12 +45,14 @@ for i in range (len(dev_questions)):
         id = articles[id]['id']
         top3_ids.append(id)
 
-    expected_IDs = dev_questions[i]['relevant_article_ids']
+    expected_IDs = fin_questions[i]['relevant_article_ids']
 
-    if dev_questions[i]["answerable"]:
+    if fin_questions[i]["answerable"]:
         answerable_count += 1
         if any(expected_id in top3_ids for expected_id in expected_IDs):
             hit += 1
+        else:
+            print(f"TF-IDF miss: {question}\nExpected: {expected_IDs}\nTop three: {top3_ids}")
 
 print(f"Hit@3: {hit/answerable_count}")
 
@@ -59,11 +65,11 @@ embeddings = model.encode(texts)
 print(embeddings.shape)
 hit = 0
 answerable_count= 0
-
+drafting_switch = True
 # 3. applying everything again but for the model
 
-for i in range (len(dev_questions)):
-    question = dev_questions[i]['question'] #choosing question 
+for i in range (len(fin_questions)):
+    question = fin_questions[i]['question'] #choosing question 
     X2_model = model.encode([question])
     
     simlarity = cosine_similarity(embeddings,X2_model)
@@ -80,10 +86,7 @@ for i in range (len(dev_questions)):
         article = articles[index]
         top3_ids.append(article['id'])
         top3_articles.append(article)
-    if i == 0:
-        print("Reference reply: Yes, you can cancel your order before it ships. [shop-001]")
-
-    if i in (0,8):
+    if drafting_switch == True:
         evidence = "\n\n".join(f"[{article['id']}] {article['text']}" for article in top3_articles)
         prompt = f"""Draft a short customer support reply.
 
@@ -156,12 +159,14 @@ for i in range (len(dev_questions)):
         print(f'The question: {question},\nThe top 3 ids: {top3_ids}')
         #print(f'The top3 articles is {top3_articles}')
 
-    expected_IDs = dev_questions[i]['relevant_article_ids']
+    expected_IDs = fin_questions[i]['relevant_article_ids']
 
-    if dev_questions[i]["answerable"]:
+    if fin_questions[i]["answerable"]:
         answerable_count += 1
         if any(expected_id in top3_ids for expected_id in expected_IDs):
             hit += 1
+        else:
+            print(f"MiniLM miss: {question}\nExpected: {expected_IDs}\nTop three: {top3_ids}")
 
 
 print(f"Hit@3 for model: {hit/answerable_count}")

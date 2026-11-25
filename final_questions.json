@@ -1,0 +1,62 @@
+[
+  {
+    "question": "I just got the dispatch email. Is it still possible to cancel the order?",
+    "answerable": true,
+    "relevant_article_ids": ["shop-001"],
+    "grading_note": "Cancellation is no longer available once the order ships. The customer can contact support about a return."
+  },
+  {
+    "question": "My order hasn't shipped and I'd like to swap the blue mug for the green one. What details should I give support?",
+    "answerable": true,
+    "relevant_article_ids": ["shop-002"],
+    "grading_note": "Give support the order number and describe the requested change."
+  },
+  {
+    "question": "I entered the wrong apartment number. The package hasn't left yet. What should I send support to correct it?",
+    "answerable": true,
+    "relevant_article_ids": ["shop-003"],
+    "grading_note": "Provide the order number and the corrected shipping address. The address can be changed before shipment."
+  },
+  {
+    "question": "My parcel is already on its way. What information should I have ready when I ask support to track it?",
+    "answerable": true,
+    "relevant_article_ids": ["shop-004"],
+    "grading_note": "Provide the order number when contacting support for tracking."
+  },
+  {
+    "question": "I've already returned an eligible item. What should I include in my refund request?",
+    "answerable": true,
+    "relevant_article_ids": ["shop-006"],
+    "grading_note": "Contact support with the order number and the reason for requesting a refund."
+  },
+  {
+    "question": "I received the item two weeks ago and used it once. Can I still return it if I kept the original packaging?",
+    "answerable": true,
+    "relevant_article_ids": ["shop-007"],
+    "grading_note": "The item must be unused and in its original packaging. Keeping the packaging and being within 30 days do not satisfy the unused condition."
+  },
+  {
+    "question": "My return was inspected and my refund was approved. How many business days does the shop take to process it?",
+    "answerable": true,
+    "relevant_article_ids": ["shop-008"],
+    "grading_note": "The shop processes approved refunds within five business days after inspection."
+  },
+  {
+    "question": "After the shop processes my refund, how long will my bank take to post it to my card?",
+    "answerable": false,
+    "relevant_article_ids": [],
+    "grading_note": "The articles specify the shop's processing window. The bank's posting time is missing."
+  },
+  {
+    "question": "Support told me to return my item. Will you email me a prepaid return label?",
+    "answerable": false,
+    "relevant_article_ids": [],
+    "grading_note": "The return policy says support provides instructions. Whether the shop provides a prepaid label by email is missing."
+  },
+  {
+    "question": "My parcel has shipped. Can I arrange to pick it up at the carrier's depot?",
+    "answerable": false,
+    "relevant_article_ids": [],
+    "grading_note": "The articles explain how to request tracking. Carrier depot pickup options are missing."
+  }
+]

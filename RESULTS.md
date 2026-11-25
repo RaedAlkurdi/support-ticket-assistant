@@ -205,3 +205,29 @@ All eight articles were within the embedding model's token limit.
 I ran `qwen2.5-coder-7b-instruct` locally through LM Studio with temperature 0. The prompt in `retrieval.py` gives the model the customer’s question and the top three articles.
 
 I tested two development questions. The cancellation reply cited `shop-001` and included the article for review. For the shipping-cost question, the script returned `insufficient_information` because the articles gave no price.
+
+## Day 8: RAG evaluation
+
+I tested both retrievers on 10 final questions about the eight shop articles. Seven were answerable and three lacked information. Both retrievers ranked articles by cosine similarity and returned the top three. TF-IDF used the default `TfidfVectorizer` fitted on article text. The embedding model was `sentence-transformers/all-MiniLM-L6-v2`.
+
+For drafts, I used MiniLM’s top three articles and the Day 7 prompt with `qwen2.5-coder-7b-instruct-q4_k_m.gguf` in LM Studio. The request set temperature to `0` and omitted `max_tokens`. The prompt asks for citations and `insufficient_information` when evidence is missing.
+
+| Snapshot | Git blob hash |
+| --- | --- |
+| `articles.json` | `b4cc6cc08919b9aef0fb6f2e3db6eb0e48a8d604` |
+| `final_questions.json` | `a7c8ac15d53767dd7cd99ae9d324533030791b39` |
+| `retrieval.py` (retrievers and Day 7 prompt) | `f78b09bc33a598d3b4f38795e43a533c5808d22f` |
+
+On the seven answerable questions, hit@3 was 5/7 (71.4%) for TF-IDF and 7/7 (100%) for MiniLM. TF-IDF missed `shop-003` for the address-change question and `shop-004` for tracking. For both, it returned `shop-002`, `shop-001`, and `shop-006`.
+
+I checked each draft against its grading note and cited article. Of the seven answerable questions, 5/7 replies answered correctly and 5/7 had sufficient citation support. The model declined all three unanswerable questions. It wrote “Insufficient information” each time, which the script normalized to `insufficient_information`.
+
+- For the dispatch question, the reply gave the pre-shipment policy without applying the after-shipping policy. I treated the dispatch email as confirmation that the order had shipped.
+- For the used-item return question, the reply said the item could be returned, contradicting the cited article's unused-item condition.
+- For the address-change question, the answer was correct, but the cited `shop-005` did not mention providing the new address. The supporting article, `shop-003`, was retrieved.
+
+Both incorrect answers were drafting errors, the relevant articles were in the top three. The tracking reply cited supporting evidence, and the bank-posting-time question produced an insufficient-information result. I wrote and graded this small set myself.
+
+LM Studio reported 411.52 ms of model processing time for one insufficient-information reply. This is one request, and does not measure end-to-end latency or the average across all ten questions.
+
+The model ran locally on my computer.
